@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Add Form</title>
+    <style>
+      .required::after {
+        content: " *";
+        color: red;
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container my-5">
+      <form id="productForm">
+        <!-- Step 1: Basic Product Details -->
+        <div id="step-1" class="form-step">
+          <h4>Step 1: Basic Product Details</h4>
+          <div class="mb-3">
+            <label for="productName" class="form-label required">Product Name</label>
+            <input type="text" class="form-control" id="productName" required />
+          </div>
+          <div class="mb-3">
+            <label for="sku" class="form-label required">SKU (Stock Keeping Unit)</label>
+            <input type="text" class="form-control" id="sku" required />
+          </div>
+          <div class="mb-3">
+            <label for="brandName" class="form-label">Brand Name</label>
+            <input type="text" class="form-control" id="brandName" />
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select required" id="category" required>
+              <option value="">Select Category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Home Appliances">Home Appliances</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Beauty & Health">Beauty & Health</option>
+              <option value="Sports & Outdoors">Sports & Outdoors</option>
+              <option value="Toys & Games">Toys & Games</option>
+              <option value="Books">Books</option>
+              <option value="Automotive">Automotive</option>
+              <option value="Food & Beverages">Food & Beverages</option>
+              <option value="Pets">Pets</option>
+              <option value="Gardening">Gardening</option>
+              <option value="Office Supplies">Office Supplies</option>
+              <option value="Arts & Crafts">Arts & Crafts</option>
+              <option value="Travel & Luggage">Travel & Luggage</option>
+              <option value="Technology">Technology</option>
+              <option value="Music & Instruments">Music & Instruments</option>
+              <option value="Home Decor">Home Decor</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="subcategory" class="form-label">Subcategory</label>
+            <select class="form-select required" id="subcategory" required>
+              <option value="">Select Subcategory</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary" id="nextBtn-1">
+            Next
+          </button>
+        </div>
+
+        <!-- Step 2: Descriptions and Metadata -->
+        <div id="step-2" class="form-step" style="display: none">
+          <h4>Step 2: Descriptions and Metadata</h4>
+          <div class="mb-3">
+            <label for="shortDescription" class="form-label required"
+              >Short Description</label
+            >
+            <textarea
+              class="form-control"
+              id="shortDescription"
+              maxlength="150"
+              required
+            ></textarea>
+            <small class="form-text text-muted">Max 150 characters.</small>
+          </div>
+          <div class="mb-3">
+            <label for="fullDescription" class="form-label"
+              >Full Description</label
+            >
+            <textarea class="form-control" id="fullDescription"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="metaTitle" class="form-label">Meta Title</label>
+            <input type="text" class="form-control" id="metaTitle" />
+          </div>
+          <div class="mb-3">
+            <label for="metaKeywords" class="form-label">Meta Keywords</label>
+            <input
+              type="text"
+              class="form-control"
+              id="metaKeywords"
+              placeholder="e.g., laptop, electronics, HP"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="metaDescription" class="form-label"
+              >Meta Description</label
+            >
+            <textarea class="form-control" id="metaDescription"></textarea>
+          </div>
+          <button type="button" class="btn btn-secondary" id="prevBtn-2">
+            Previous
+          </button>
+          <button type="button" class="btn btn-primary" id="nextBtn-2">
+            Next
+          </button>
+        </div>
+
+        <!-- Step 3: Media Uploads -->
+        <div id="step-3" class="form-step" style="display: none">
+          <h4>Step 3: Media Uploads</h4>
+          <div class="mb-3">
+            <label for="mainImage" class="form-label required">Main Image</label>
+            <input
+              type="file"
+              class="form-control"
+              id="mainImage"
+              accept="image/*"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="galleryImages" class="form-label"
+              >Gallery Images (up to 3)</label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="galleryImages"
+              accept="image/*"
+              multiple
+            />
+            <small class="form-text text-muted"
+              >You can upload a maximum of 3 images.</small
+            >
+          </div>
+          <button type="button" class="btn btn-secondary" id="prevBtn-3">
+            Previous
+          </button>
+          <button type="button" class="btn btn-primary" id="nextBtn-3">
+            Next
+          </button>
+        </div>
+
+        <!-- Step 4: Variant Options -->
+        <div id="step-4" class="form-step" style="display: none">
+          <h4>Step 4: Variant Options</h4>
+          <button type="button" class="btn btn-primary" id="addVariantBtn">
+            Add Variant
+          </button>
+          <ul id="variantList" class="list-group my-3"></ul>
+
+          <!-- Variant Modal -->
+          <div
+            class="modal fade"
+            id="variantModal"
+            tabindex="-1"
+            aria-labelledby="variantModalLabel"
+            aria-hidden="true"
+            class="mb-3"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                  <h5 class="modal-title" id="variantModalLabel">
+                    Add Product Variant
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="variantForm">
+                    <!-- Variant Type Selection -->
+                    <div class="mb-3">
+                      <label for="variantType" class="form-label"
+                        >Variant Type</label
+                      >
+                      <select id="variantType" class="form-select required" required>
+                        <option value="" selected disabled>
+                          Select Variant Type
+                        </option>
+                        <option value="Size">Size</option>
+                        <option value="Color">Color</option>
+                        <option value="Unit">Unit</option>
+                      </select>
+                    </div>
+
+                    <!-- Size Input -->
+                    <div id="sizeInput" class="mb-3 d-none">
+                      <label for="size" class="form-label">Size</label>
+                      <input
+                        type="text"
+                        id="size"
+                        class="form-control"
+                        placeholder="Enter Size (e.g., S, M, L, XL)"
+                      />
+                    </div>
+
+                    <!-- Color Input -->
+                    <div id="colorInput" class="mb-3 d-none">
+                      <label for="color" class="form-label">Color</label>
+                      <input
+                        type="color"
+                        id="color"
+                        class="form-control form-control-color"
+                      />
+                    </div>
+
+                    <!-- Unit Input -->
+                    <div id="unitInput" class="mb-3 d-none">
+                      <label for="unitCount" class="form-label"
+                        >Unit Count</label
+                      >
+                      <input
+                        type="number"
+                        id="unitCount"
+                        class="form-control"
+                        placeholder="Enter Unit Count"
+                      />
+
+                      <label for="unitType" class="form-label mt-2"
+                        >Unit Type</label
+                      >
+                      <select id="unitType" class="form-select">
+                        <option value="" selected disabled>
+                          Select Unit Type
+                        </option>
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="piece">Piece</option>
+                        <option value="liter">Liter (L)</option>
+                        <option value="meter">Meter (m)</option>
+                      </select>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        id="saveVariantBtn"
+                        class="btn btn-success"
+                      >
+                        <i class="bi bi-save"></i> Save Variant
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-secondary" id="prevBtn-4">
+            Previous
+          </button>
+          <button type="button" class="btn btn-primary" id="nextBtn-4">
+            Next
+          </button>
+        </div>
+
+        <!-- Step 5: Pricing and Additional Costs -->
+        <div id="step-5" class="form-step" style="display: none">
+          <h4>Step 5: Pricing and Additional Costs</h4>
+          <div class="mb-3">
+            <label for="basePrice" class="form-label">Base Price</label>
+            <input
+              type="number"
+              id="basePrice"
+              class="form-control required"
+              placeholder="Enter Base Price"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="discount" class="form-label">Discount (%)</label>
+            <input
+              type="number"
+              id="discount"
+              class="form-control"
+              placeholder="Enter Discount Percentage"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="shippingFee" class="form-label">Shipping Fee</label>
+            <input
+              type="number"
+              id="shippingFee"
+              class="form-control"
+              placeholder="Enter Shipping Fee"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="finalPrice" class="form-label">Final Price</label>
+            <input
+              type="text"
+              id="finalPrice"
+              class="form-control"
+              placeholder="Final Price"
+              disabled
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="totalStock" class="form-label">Total Stock</label>
+            <input
+              type="number"
+              id="totalStock"
+              class="form-control required"
+              placeholder="Enter Total Stock"
+              required
+            />
+          </div>
+
+          <button type="button" class="btn btn-secondary" id="prevBtn-5">
+            Previous
+          </button>
+          <button type="button" class="btn btn-primary" id="nextBtn-5">
+            Submit
+          </button>
+        </div>
+
+        <!-- Final Step: Submit and Display Product Table -->
+        <div id="final-step" class="form-step" style="display: none">
+          <h4>Final Step: Submit Product</h4>
+
+          <h4 class="mt-4">Product Details</h4>
+          <button id="addProductBtn" class="btn btn-success mb-3">
+            Add New Product
+          </button>
+
+          <!-- Product Table -->
+          <table id="productTable" class="table table-striped mt-3">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>SKU</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Variant</th>
+                <th>Base Price</th>
+                <th>Discount</th>
+                <th>Shipping Fee</th>
+                <th>Final Price</th>
+                <th>Total Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productTableBody"></tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+
+    <!-- Bootstrap 5 JS and Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
